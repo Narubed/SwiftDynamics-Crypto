@@ -9,6 +9,7 @@ interface Provider {
 }
 export default function crypto2() {
   let isValue: { id: number; name: string; coin: string; price: number; amount: number; profit: number; salary: number; }[] = []
+  const [isLastValue, setLastValue] = useState<{ id: number; name: string; coin: string; price: number; amount: number; profit: number; salary: number; }[]>([])
 
   const [isInput, setInput] = useState<Provider>({
     id: 0,
@@ -23,6 +24,7 @@ export default function crypto2() {
   const onClickFuncChangeString = () => {
     const value = ChangeString()
     isValue = value
+    setLastValue(isValue)
     funcCheckValue()
   }
   const onSubmitButton = () => {
@@ -35,6 +37,7 @@ export default function crypto2() {
       profit: 0,
       salary: 0
     })
+    setLastValue(isValue)
     setInput({
       id: 0,
       name: '',
@@ -85,6 +88,10 @@ export default function crypto2() {
     <div>
       <button onClick={onClickFuncChangeString}> use Data </button> {isLastSummary}
       <br />
+      <div> ID | B or S| name | price | amount</div>
+      {isLastValue.map((item) => (
+        <div> {item.id}| {item.name}| {item.coin} | {item.price} | {item.amount}</div>
+      ))}
       Buy or Sale
       <input type="string" id='name' value={isInput.name} onChange={(e) => setInput({ ...isInput, name: e.target.value })} />
       <br />
